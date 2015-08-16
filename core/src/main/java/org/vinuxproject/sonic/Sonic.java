@@ -7,7 +7,7 @@ package org.vinuxproject.sonic;/* Sonic library
 */
 
 
-import de.ph1b.audiobook.utils.L;
+import android.util.Log;
 
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class Sonic {
@@ -767,7 +767,7 @@ public class Sonic {
             if (oldRatePosition == oldSampleRate) {
                 oldRatePosition = 0;
                 if (newRatePosition != newSampleRate) {
-                    L.e(TAG, "Assertion failed: newRatePosition != newSampleRate");
+                    Log.e(TAG, "Assertion failed: newRatePosition != newSampleRate");
                 }
                 newRatePosition = 0;
             }
