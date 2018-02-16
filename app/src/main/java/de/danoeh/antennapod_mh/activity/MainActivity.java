@@ -70,6 +70,9 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import de.danoeh.antennapod_mh.core.storage.DownloadRequestException;
+import de.danoeh.antennapod_mh.core.storage.DownloadRequester;
+
 /**
  * The activity that is shown when the user launches the app.
  */
@@ -228,6 +231,36 @@ public class MainActivity extends CastEnabledActivity implements NavDrawerActivi
 
             // for backward compatibility, we only change defaults for fresh installs
             UserPreferences.setUpdateInterval(12);
+
+            String[] feeds = new String[]{
+                    "https://www.ranlevi.com/feed/mh_network_feed/",
+                    "https://www.ranlevi.com/feed/podcast/",
+                    "https://www.ranlevi.com/feed/osimpolitica/",
+                    "https://www.ranlevi.com/feed/osim_refua/",
+                    "https://www.ranlevi.com/feed/osimtanach/",
+                    "https://www.ranlevi.com/feed/sportpod_podcast/",
+                    "https://www.ranlevi.com/feed/bizpod/",
+                    "https://www.ranlevi.com/feed/osim_shivuk/",
+                    "https://www.ranlevi.com/feed/osim_tech/",
+                    "https://www.ranlevi.com/feed/osim_tiuol/",
+                    "https://www.ranlevi.com/feed/osim_historia_archived_episodes/",
+                    "https://malicious.life/feed/podcast/",
+                    "https://www.familysounds.co.il/feed/podcast/",
+                    "https://www.waterline.ranlevi.com/feed/podcast/",
+                    "https://www.cmpod.net/feed/podcast/",
+                    "https://www.ranlevi.com/feed/reches/",
+                    "http://tzipilivni.podbean.com/feed/"
+            };
+
+            for (String feedURL : feeds) {
+                Feed feed = new Feed(feedURL, null);
+                try {
+                    DownloadRequester.getInstance().downloadFeed(this, feed);
+                } catch (DownloadRequestException e) {
+                    e.printStackTrace();
+                    Log.e(TAG, "Failed to load feed " + feed, e);
+                }
+            }
 
             SharedPreferences.Editor edit = prefs.edit();
             edit.putBoolean(PREF_IS_FIRST_LAUNCH, false);
