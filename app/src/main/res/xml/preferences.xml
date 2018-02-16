@@ -185,7 +185,7 @@
             android:summary="@string/pref_autoUpdateIntervallOrTime_sum"
             android:title="@string/pref_autoUpdateIntervallOrTime_title"/>
         <de.danoeh.antennapod_mh.preferences.SwitchCompatPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:enabled="true"
             android:key="prefMobileUpdate"
             android:summary="@string/pref_mobileUpdate_sum"
@@ -232,7 +232,7 @@
             <de.danoeh.antennapod_mh.preferences.SwitchCompatPreference
                 android:key="prefEnableAutoDownloadWifiFilter"
                 android:title="@string/pref_autodl_wifi_filter_title"
-                android:summary="@string/pref_autodl_wifi_filter_sum"/>
+                android:summary="@string/pref_autodl_wifi_filter_sum" />
         </PreferenceScreen>
         <Preference
             android:key="prefProxy"

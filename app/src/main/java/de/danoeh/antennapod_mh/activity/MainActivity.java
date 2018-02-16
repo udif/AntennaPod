@@ -194,7 +194,7 @@ public class MainActivity extends CastEnabledActivity implements NavDrawerActivi
                     // it's not a number, this happens if we removed
                     // a label from the NAV_DRAWER_TAGS
                     // give them a nice default...
-                    loadFragment(QueueFragment.TAG, null);
+                    loadFragment(SubscriptionFragment.TAG, null);
                 }
             }
         }
@@ -219,7 +219,7 @@ public class MainActivity extends CastEnabledActivity implements NavDrawerActivi
 
     private String getLastNavFragment() {
         SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        String lastFragment = prefs.getString(PREF_LAST_FRAGMENT_TAG, QueueFragment.TAG);
+        String lastFragment = prefs.getString(PREF_LAST_FRAGMENT_TAG, SubscriptionFragment.TAG);
         Log.d(TAG, "getLastNavFragment() -> " + lastFragment);
         return lastFragment;
     }
