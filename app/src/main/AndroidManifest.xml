@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.danoeh.antennapod_mh"
     android:installLocation="auto"
-    android:versionCode="0103"
-    android:versionName="1.3">
+    android:versionCode="9000104"
+    android:versionName="1.4">
     <!--
       Version code schema:
       "1.2.3-SNAPSHOT" -> 1020300
@@ -384,9 +384,11 @@
             android:name="de.danoeh.antennapod_mh.core.glide.ApGlideModule"
             android:value="GlideModule" />
 
+        <!--
         <meta-data
                     android:name="com.google.android.gms.car.application"
                     android:resource="@xml/automotive_app_desc"/>
+        -->
     </application>
 
 </manifest>

@@ -75,6 +75,11 @@ import de.danoeh.antennapod_mh.core.storage.DownloadRequester;
 
 /**
  * The activity that is shown when the user launches the app.
+ * Ver 1.4 (9000104):
+ *  - Added IEC Podcast, removed Reches Podcast.
+ *  - Fixed rate us message.
+ *  - Removed the auto manifest entry from the AndroidManifest.xml
+ *  - Deleted the auto description.xml file
  */
 public class MainActivity extends CastEnabledActivity implements NavDrawerActivity {
 
@@ -248,7 +253,7 @@ public class MainActivity extends CastEnabledActivity implements NavDrawerActivi
                     "https://www.familysounds.co.il/feed/podcast/",
                     "https://www.waterline.ranlevi.com/feed/podcast/",
                     "https://www.cmpod.net/feed/podcast/",
-                    "https://www.ranlevi.com/feed/reches/",
+                    "https://www.ranlevi.com/feed/iec_mitan_hashmali/",
                     "http://tzipilivni.podbean.com/feed/"
             };
 
