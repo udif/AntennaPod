@@ -80,6 +80,9 @@ import de.danoeh.antennapod_mh.core.storage.DownloadRequester;
  *  - Fixed rate us message.
  *  - Removed the auto manifest entry from the AndroidManifest.xml
  *  - Deleted the auto description.xml file
+ *
+ *  Ver 1.5 (9000105):
+ *  - Fixed splash screen & app icon bug.
  */
 public class MainActivity extends CastEnabledActivity implements NavDrawerActivity {
 
