@@ -88,18 +88,18 @@ public class MainActivity extends CastEnabledActivity implements NavDrawerActivi
 
     private static final String TAG = "MainActivity";
 
-    private static final int EVENTS = EventDistributor.FEED_LIST_UPDATE
-            | EventDistributor.UNREAD_ITEMS_UPDATE;
+    private static final int    EVENTS = EventDistributor.FEED_LIST_UPDATE
+                                       | EventDistributor.UNREAD_ITEMS_UPDATE;
 
-    public static final String PREF_NAME = "MainActivityPrefs";
-    public static final String PREF_IS_FIRST_LAUNCH = "prefMainActivityIsFirstLaunch";
+    public static final String  PREF_NAME = "MainActivityPrefs";
+    public static final String  PREF_IS_FIRST_LAUNCH = "prefMainActivityIsFirstLaunch";
     private static final String PREF_LAST_FRAGMENT_TAG = "prefMainActivityLastFragmentTag";
 
-    public static final String EXTRA_NAV_TYPE = "nav_type";
-    public static final String EXTRA_NAV_INDEX = "nav_index";
-    public static final String EXTRA_FRAGMENT_TAG = "fragment_tag";
-    public static final String EXTRA_FRAGMENT_ARGS = "fragment_args";
-    public static final String EXTRA_FEED_ID = "fragment_feed_id";
+    public static final String  EXTRA_NAV_TYPE = "nav_type";
+    public static final String  EXTRA_NAV_INDEX = "nav_index";
+    public static final String  EXTRA_FRAGMENT_TAG = "fragment_tag";
+    public static final String  EXTRA_FRAGMENT_ARGS = "fragment_args";
+    public static final String  EXTRA_FEED_ID = "fragment_feed_id";
 
     private static final String SAVE_BACKSTACK_COUNT = "backstackCount";
     private static final String SAVE_TITLE = "title";
@@ -117,30 +117,33 @@ public class MainActivity extends CastEnabledActivity implements NavDrawerActivi
     private Toolbar toolbar;
     private ExternalPlayerFragment externalPlayerFragment;
     private DrawerLayout drawerLayout;
-
     private View navDrawer;
     private ListView navList;
     private NavListAdapter navAdapter;
     private int mPosition = -1;
-
     private ActionBarDrawerToggle drawerToggle;
-
     private CharSequence currentTitle;
-
     private ProgressDialog pd;
-
     private Subscription subscription;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        //Preferences are kept in Core/preferences.
         setTheme(UserPreferences.getNoTitleTheme());
+
         super.onCreate(savedInstanceState);
+
+        //From Core/util
         StorageUtils.checkStorageAvailability(this);
+
+        //main.xml
         setContentView(R.layout.main);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar); //From CastEnabledActivity, which extends AppCompatActivity
 
+        //Define the appearance of the ToolBar.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             findViewById(R.id.shadow).setVisibility(View.GONE);
             int elevation = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4,
@@ -148,26 +151,35 @@ public class MainActivity extends CastEnabledActivity implements NavDrawerActivi
             getSupportActionBar().setElevation(elevation);
         }
 
+        //??? Where from?
         currentTitle = getTitle();
 
+        //The DrawerLayout is the top-level container of the layout. Allows views to be pulled
+        //from the vertical edges of the screen.
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navList = (ListView) findViewById(R.id.nav_list);
+
+        navList = (ListView) findViewById(R.id.nav_list); //Included in nav_layout
         navDrawer = findViewById(R.id.nav_layout);
 
+        //Controls the drawer's close/open function.
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close);
         if (savedInstanceState != null) {
             int backstackCount = savedInstanceState.getInt(SAVE_BACKSTACK_COUNT, 0);
             drawerToggle.setDrawerIndicatorEnabled(backstackCount == 0);
         }
-        drawerLayout.setDrawerListener(drawerToggle);
+        drawerLayout.setDrawerListener(drawerToggle); //Notifies the layout when drawer opens/closes.
 
+        //BackStack of fragments.
         final FragmentManager fm = getSupportFragmentManager();
-
+        //??? When the backstack changes, we set the drawerToggle.
         fm.addOnBackStackChangedListener(() -> drawerToggle.setDrawerIndicatorEnabled(fm.getBackStackEntryCount() == 0));
 
+        //Controls a Home button (??? Not visible for some reason...)
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        //The adapter extracts data from list items.
+        //The list is the podcasts list in the drawer.
         navAdapter = new NavListAdapter(itemAccess, this);
         navList.setAdapter(navAdapter);
         navList.setOnItemClickListener(navListClickListener);
@@ -671,6 +683,8 @@ public class MainActivity extends CastEnabledActivity implements NavDrawerActivi
     private DBReader.NavDrawerData navDrawerData;
     private int selectedNavListIndex = 0;
 
+    //This is a class that allows access to items.
+    //Here we implement an interface defined in the NavListAdapter file.
     private final NavListAdapter.ItemAccess itemAccess = new NavListAdapter.ItemAccess() {
         @Override
         public int getCount() {
