@@ -186,6 +186,8 @@ public class MainActivity extends CastEnabledActivity implements NavDrawerActivi
         navList.setOnItemLongClickListener(newListLongClickListener);
         registerForContextMenu(navList);
 
+        //When a podcast is selected from the list - get it's index.
+        //??? only from the list? maybe also from Subscriptions?
         navAdapter.registerDataSetObserver(new DataSetObserver() {
             @Override
             public void onChanged() {
@@ -193,6 +195,7 @@ public class MainActivity extends CastEnabledActivity implements NavDrawerActivi
             }
         });
 
+        //Listener for the Settings button
         findViewById(R.id.nav_settings).setOnClickListener(v -> {
             drawerLayout.closeDrawer(navDrawer);
             startActivity(new Intent(MainActivity.this, PreferenceActivity.class));
@@ -200,6 +203,8 @@ public class MainActivity extends CastEnabledActivity implements NavDrawerActivi
 
         FragmentTransaction transaction = fm.beginTransaction();
 
+        //??? Looking for the Main screen area, and inserting the main fragment.
+        //load the last fragment used, or some default.
         Fragment mainFragment = fm.findFragmentByTag("main");
         if (mainFragment != null) {
             transaction.replace(R.id.main_view, mainFragment);
@@ -218,6 +223,8 @@ public class MainActivity extends CastEnabledActivity implements NavDrawerActivi
                 }
             }
         }
+
+        //add the player fragment.
         externalPlayerFragment = new ExternalPlayerFragment();
         transaction.replace(R.id.playerFragment, externalPlayerFragment, ExternalPlayerFragment.TAG);
         transaction.commit();
@@ -237,6 +244,7 @@ public class MainActivity extends CastEnabledActivity implements NavDrawerActivi
         edit.apply();
     }
 
+    //Get the last fragment used from the preference. Default is Subscription.
     private String getLastNavFragment() {
         SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         String lastFragment = prefs.getString(PREF_LAST_FRAGMENT_TAG, SubscriptionFragment.TAG);
@@ -250,6 +258,7 @@ public class MainActivity extends CastEnabledActivity implements NavDrawerActivi
             new Handler().postDelayed(() -> drawerLayout.openDrawer(navDrawer), 1500);
 
             // for backward compatibility, we only change defaults for fresh installs
+            //Sets the defalut update to 12 hours
             UserPreferences.setUpdateInterval(12);
 
             String[] feeds = new String[]{
